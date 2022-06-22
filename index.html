@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jump Dino !</title>
+  </head>
+  <style type="text/css" media="all">
+    *{
+      margin:0;
+      padding:0;
+      box-sizing: border-box;
+    }
+    .container{
+      width:100%;
+      height:240px;
+      position :relative;
+      overflow: hidden;
+      border-bottom: 3px solid #aaa;
+      margin:5px auto 0;
+    }
+    .container img{
+      width:110px;
+      height:110px;
+      object-fit: cover;
+    }
+    .tirex{
+      position : absolute ;
+      top:143px;
+      left:0;
+      transform: translateX(-20px);
+      right:0;
+      bottom:0;
+      
+    }
+    .tirex.active{
+      animation: jump 400ms alternate ease;
+    }
+    @keyframes jump{
+      70%{
+        top:2px;
+      }
+    }
+    
+    .control_buttons{
+      width:80%;
+      height:75px;
+      margin:15px auto 0;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #top{
+      display:inline-block;
+      border:1px solid #c1c1c1;
+      width:100%;
+      height:100%;
+      padding:10px 32px;
+      text-align: center;
+      line-height: 1;
+      border-radius: 30px;
+      background:#e65c4f;
+      color:#e9eef2;
+      font-size: 3em;
+    }
+    
+    .block_down{
+      width:25px;
+      height:45px;
+      background:darkred;
+      position: relative;
+      left :350px;
+      top :200px;
+      animation : block .6s linear infinite;
+      z-index: -1;
+    }
+    @keyframes block{
+      from{
+        right:550px;
+      }
+      to{
+        left:-30px;
+      }
+      
+      
+    }
+    
+    #scoreSpan{
+      position: absolute ;
+      right:45px;
+      top:10px;
+      font-size: 1.2em;
+    }
+    
+    
+    footer {
+      width:100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      position: fixed;
+      bottom:0;
+    }
+    footer a{
+      display:block;
+      font-size: .5em;
+      letter-spacing: 5px;
+      padding:10px 20px;
+    }
+    footer p{
+      font-size: .5em;
+      text-align: center ;
+      padding:10px;
+    }
+    footer button {
+      border:1px solid #f1f1f2;
+      padding:10px 10px;
+      display: block;
+      font-size: 1.1em;
+    }
+  </style>
+  <body>
+    
+    <div class="container">
+      <p id="scoreSpan">0</p>
+      <img class="tirex" src="tirex.png" alt="Tirex" id="tirex"/>
+     <div class="block_top">
+     </div>
+     <div class="block_down" id="block">
+       
+     </div>
+    </div>
+    
+    <div class="control_buttons">
+      
+      <span id="top" onclick="jump()">Up</span>
+      
+    </div>
+    
+    <script type="text/javascript" charset="utf-8">
+      
+      var dino = document.getElementById("tirex")
+      var block = document.getElementById("block")
+      var counter = 0
+      function jump(){
+        if(dino.classList != "active"){
+          dino.classList.add("active")
+        }
+ 
+        setTimeout(function(){
+          dino.classList.remove("active")
+        },500)
+        
+        
+      }
+      
+      setInterval = (function(){
+        counter++
+      },1000)
+    var checkDead = setInterval(function() {
+    let characterTop = parseInt(window.getComputedStyle(dino).getPropertyValue("top"));
+    let blockLeft = parseInt(window.getComputedStyle(block).getPropertyValue("left"));
+    if(blockLeft<20 && blockLeft>-20 && characterTop>=130){
+        block.style.animation = "none";
+        alert("Game Over. score:" +Math.floor(counter/100));
+          counter=0;
+
+       
+        block.style.animation = "block 1s infinite linear";
+    }else{
+        counter++;
+        document.getElementById("scoreSpan").innerHTML = Math.floor(counter/100);
+    }
+}, 10);
+      
+    </script>
+    
+ <script type="text/javascript" charset="utf-8">
+   var url = location.href
+    function share(){
+      open("whatsapp://send?text=" + "\n" + "Hey 👋 let's playing Jump Dino" + "\n" + " "+ url )
+    }
+ </script>
+ 
+    
+    <footer>
+      <button class="share" type="button"onclick="share()">Share with friends</button>
+       <p> Game powered by <a href="https://wa.me/qr/C7LIRZK3OSQGI1" target="_blank">TheDzigner </></a></p>
+    </footer>
+  </body>
+</html>
